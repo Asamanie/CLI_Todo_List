@@ -2,6 +2,7 @@
 
 // Create array to hold list of todo items
 $items = array(TODO item 1, TODO item 2);
+unset($items[0]);
 
 // List array items formatted for CLI
 function list_items($list)
