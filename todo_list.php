@@ -1,7 +1,7 @@
 <?php
 
 // Create array to hold list of todo items
-$items = array(TODO item 1, TODO item 2);
+$items = ['TODO item 1', 'TODO item 2'];
 unset($items[0]);
 
 // List array items formatted for CLI
@@ -32,6 +32,15 @@ function get_input($upper = false)
 {
     $result = (trim(fgets(STDIN));
     return $upper ? strtoupper($result): $result;
+
+    if ($upper)
+    {
+        return strtoupper($result);
+    }    
+    else
+    {
+        return$results;
+    }
 }
 get_input();
 get_input(true);
