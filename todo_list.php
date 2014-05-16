@@ -1,8 +1,7 @@
 <?php
 
 // Create array to hold list of todo items
-$items = ['TODO item 1', 'TODO item 2'];
-unset($items[0]);
+$items = [];
 
 // List array items formatted for CLI
 function list_items($list)
@@ -18,32 +17,21 @@ function list_items($list)
     // foreach or for
      foreach ($list as $key => $value)
      {
-        $result .= $key . PHP_EOL;
+        $result .= '[' . ($key + 1) . '] ' . $value . PHP_EOL;
      }
 
      return $result;
 }
 
-echo list_items($items);
-$result .= $key . PHP_EOL;
+// echo list_items($items);
+// $result .= $key . PHP_EOL;
 // Get STDIN, strip whitespace and newlines, 
 // and convert to uppercase if $upper is true
 function get_input($upper = false) 
 {
-    $result = (trim(fgets(STDIN));
-    return $upper ? strtoupper($result): $result;
-
-    if ($upper)
-    {
-        return strtoupper($result);
-    }    
-    else
-    {
-        return$results;
-    }
+    $result = trim(fgets(STDIN));
+    return $upper ? strtoupper($result): $result;   
 }
-get_input();
-get_input(true);
 
 // The loop!
 do {
@@ -69,7 +57,8 @@ do {
         // Get array key
         $key = get_input();
         // Remove from array
-        unset($items[$key]);
+        unset($items[$key - 1]);
+        $items = array_values($items);
     }
 // Exit when input is (Q)uit
 } while ($input != 'Q');
