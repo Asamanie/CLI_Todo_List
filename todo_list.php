@@ -39,7 +39,7 @@ do {
     echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (Q)uit : ';
+    echo '(N)ew item, (R)emove item, (S)ort (Q)uit : ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -51,9 +51,10 @@ do {
         echo 'Enter item: ';
         // Add entry to list array
         $items[] = get_input();
-    rsort($items);
+    asort($items); // sorts the input items entered 
+    } 
 
-    } elseif ($input == 'R') {
+    elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
         // Get array key
@@ -61,8 +62,10 @@ do {
         // Remove from array
         unset($items[$key - 1]);
         $items = array_values($items);
-
+    asort($items); // resorts input items if 1 item is removed 
     }
+
+        echo "(A)-Z, (Z)-A, (O)rder Enter, (R)everse order entered : ";
 // Exit when input is (Q)uit
 } while ($input != 'Q');
 
