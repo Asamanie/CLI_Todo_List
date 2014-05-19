@@ -51,7 +51,8 @@ do {
         echo 'Enter item: ';
         // Add entry to list array
         $items[] = get_input();
-    asort($items);
+    rsort($items);
+
     } elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
