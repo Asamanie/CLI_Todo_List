@@ -51,6 +51,7 @@ do {
         echo 'Enter item: ';
         // Add entry to list array
         $items[] = get_input();
+    asort($items);
     } elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
@@ -59,6 +60,7 @@ do {
         // Remove from array
         unset($items[$key - 1]);
         $items = array_values($items);
+
     }
 // Exit when input is (Q)uit
 } while ($input != 'Q');
