@@ -33,6 +33,12 @@ function get_input($upper = false)
     return $upper ? strtoupper($result): $result;   
 }
 
+function sort_menu($itmes){
+    echo '(A)-Z, (O)rder entered, (R)everse order entered : ';
+
+    $input = get_input(TRUE);
+}
+
 // The loop!
 do {
     // Echo the list produced by the function
@@ -65,7 +71,18 @@ do {
     asort($items); // resorts input items if 1 item is removed 
     }
 
-        echo "(A)-Z, (Z)-A, (O)rder Enter, (R)everse order entered : ";
+    elseif ($input == 'S') {
+        echo '(A)-Z, (Z)-A, (O)rder Enter, (R)everse order entered : ';
+        
+        $input = get_input(true);
+
+
+
+        return($items);    
+
+    }
+        
+
 // Exit when input is (Q)uit
 } while ($input != 'Q');
 
