@@ -19,25 +19,21 @@ function list_items($list)
      {
         $result .= '[' . ($key + 1) . '] ' . $value . PHP_EOL;
      }
-
+     // TODO item 1
+     // TODO item 2
+     // and so on
+     // retunr the results to computer, DO NOT ECHO
      return $result;
 }
 
 // echo list_items($items);
-// $result .= $key . PHP_EOL;
-// Get STDIN, strip whitespace and newlines, 
-// and convert to uppercase if $upper is true
+
 function get_input($upper = false) 
 {
     $result = trim(fgets(STDIN));
     return $upper ? strtoupper($result): $result;   
 }
 
-function sort_menu($itmes){
-    echo '(A)-Z, (O)rder entered, (R)everse order entered : ';
-
-    $input = get_input(TRUE);
-}
 
 // The loop!
 do {
@@ -53,13 +49,24 @@ do {
 
     // Check for actionable input
     if ($input == 'N') {
-        // Ask for entry
+            // Ask for entry
         echo 'Enter item: ';
-        // Add entry to list array
-        $items[] = get_input();
-    asort($items); // sorts the input items entered 
-    } 
-
+            // Add entry to list array
+        $todo_item = get_input();
+            // ask user where they want entry added 
+        echo 'Do you want the entry added to the (B)eginning or (E)nd of your list? ';
+                // get input from the user
+         $order_choice = get_input(TRUE);
+                
+             if ($order_choice == 'B') {
+                    array_unshift($items, $todo_item);
+                // add to end end of list
+                } else if ($order_choice == 'E') {
+                    array_push($items, $todo_item);
+                } else {
+                    array_push($items, $todo_item);
+                }
+    }        
     elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
@@ -68,23 +75,58 @@ do {
         // Remove from array
         unset($items[$key - 1]);
         $items = array_values($items);
-    asort($items); // resorts input items if 1 item is removed 
     }
 
     elseif ($input == 'S') {
-        echo '(A)-Z, (Z)-A, (O)rder Enter, (R)everse order entered : ';
-        
-        $input = get_input(true);
-
-
-
-        return($items);    
+        // Remove which item?
+        // echo 'Enter item number to remove: 
+        echo 'How do you want it sorted: (A)-Z, (Z)-A, (O)rder entered, (R)everse order entered"? ';
+        // Get array key
+        $sort_input = get_input(TRUE);
+            //Sort alphabetically
+            if ($sort_input == 'A') {
+                sort($items);
+            //Sort reverse alphabetically
+            } 
+            elseif ($sort_input == 'Z')  {
+                rsort($items);
+            }
+            elseif ($sort_input == 'O') {
+                 asort($items);  
+            }
+            elseif ($sort_input == 'R') {
+                 arsort($items);  
 
     }
-        
+    elseif($input == 'F') {
+        //Verify key input with user
+        echo 'Are you sure you want to remove first item? (Y)es or (N)o ';
+        //Get input from user
+        $remove_first = get_input(TRUE);
+            //Remove item
+            if ($remove_first == 'Y') {
+                array_shift($items);
+            }
+    
+    //Allow user to remove items from the end of the list
+    } elseif ($input == 'L') {
+        //Verify key input with user
+        echo 'Are you sure you want to remove last item? (Y) or (N) ';
+        //Get input from user
+        $remove_last = get_input(TRUE);
+            //Remove item
+            if ($remove_last == 'Y') {
+                array_pop($items);
+            }
+        }
+
+}
+   
+    
+    // return($items);            
 
 // Exit when input is (Q)uit
-} while ($input != 'Q');
+while ($input != 'Q');
 
 // Say Goodbye!
 echo "Goodbye!\n";
