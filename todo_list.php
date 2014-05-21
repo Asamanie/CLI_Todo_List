@@ -26,6 +26,7 @@ function list_items($list)
      return $result;
 }
 // open file through path given by user 
+
 function open_file()
 {
     $filename = get_input();
@@ -114,7 +115,6 @@ do {
         //Create a sub-menu with file and save option
         echo 'Please enter file path to open: ';
             //Get input from user
-            // if $input = get_input(TRUE);
                 $items = open_file();
     }
 
