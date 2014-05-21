@@ -27,17 +27,23 @@ function list_items($list)
 }
 // open file through path given by user 
 
-function open_file()
-{
-    $filename = get_input();
+function open_file($filename, $array)
+{ 
     $handle = fopen($filename, "r");
     $contents = fread($handle, filesize($filename));
     fclose($handle);
-    $items = explode("\n", $contents);
-    return $items;
+    $array = explode("\n", $contents);
+    return $array;
 }
-// echo list_items($items);
+// save file function 
 
+function save_file($filename, $contents)
+{
+    $handle = fopen($filename, "w");
+    fwrite($handle, $contents);
+    fclose($handle);
+
+}
 function get_input($upper = false) 
 {
     $result = trim(fgets(STDIN));
@@ -51,7 +57,7 @@ do {
     echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (S)ort, (O)pen, (Q)uit : ';
+    echo '(N)ew item, (R)emove item, (S)ort, (F)iles, (Q)uit : ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -78,7 +84,38 @@ do {
                 else {
                     array_push($items, $todo_item);
                 }
-    }        
+          
+    }
+
+    elseif ($input == 'F') {
+        //Create a sub-menu with file and save option
+        echo 'Would you like to (O)pen file or (S)ave file: ';
+            //Get input from user
+            $file_input = get_input(TRUE);
+            //Allow the user to be able to enter the path to a file to have it loaded.
+            if ($file_input == 'O') {
+                echo 'Please enter file to open: ';
+                $filename = get_input();
+                $items = open_file($filename, $items);
+                
+            //Allow the user to save file
+            } elseif ($file_input == 'S') {
+                echo 'Please choose file to save: ';
+                $filename = get_input();
+                //if the file is there then it will proceed on to prompt user to overwrite file 
+                if (file_exists($filename)) {
+                    echo "** FILE EXISTS ** Would you like to proceed and overwrite the file? (Y)es or (N)o? ";
+                
+                    $overwrite_input = get_input(TRUE);
+                    // is yes, it will cont. and if no it will automatically save
+                    if ($overwrite_input == 'Y') {
+                        save_file($filename, implode("\n", $items));
+                    }
+                } else {
+                    save_file($filename, implode("\n", $items));
+                }
+            }
+
     elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
@@ -111,25 +148,17 @@ do {
             }   
     } 
 
-    elseif ($input == 'O') {
-        //Create a sub-menu with file and save option
-        echo 'Please enter file path to open: ';
-            //Get input from user
-                $items = open_file();
-    }
-
-    elseif($input == 'F') {
+    elseif ($input == 'F') {
         //Verify key input with user
         echo 'Are you sure you want to remove first item? (Y)es or (N)o ';
         //Get input from user
         $remove_first = get_input(TRUE);
             //Remove item
-            if ($remove_first == 'Y') {
-                array_shift($items);
-            }
+        if ($remove_first == 'Y') {
+            array_shift($items);
+        }
     
-    
-    } 
+    }
     //Allow user to remove items from the end of the list
     elseif ($input == 'L') {
         //Verify key input with user
@@ -137,16 +166,14 @@ do {
         //Get input from user
         $remove_last = get_input(TRUE);
             //Remove item
-            if ($remove_last == 'Y') {
-                array_pop($items);
-            }
+        if ($remove_last == 'Y') {
+            array_pop($items);
         }
+    }
 
 }
-   
-    
-    // return($items);            
-
+                    
+}   
 // Exit when input is (Q)uit
 while ($input != 'Q');
 
@@ -154,8 +181,4 @@ while ($input != 'Q');
 echo "Goodbye!\n";
 
 // Exit with 0 errors
-exit(0);
-
-
-
-
+exit (0);
