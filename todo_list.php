@@ -27,13 +27,13 @@ function list_items($list)
 }
 // open file through path given by user 
 
-function open_file($filename, $array)
+function open_file($filename, $itemsinlist)
 { 
     $handle = fopen($filename, "r");
     $contents = fread($handle, filesize($filename));
     fclose($handle);
-    $array = explode("\n", $contents);
-    return $array;
+    $itmesinlist = array_merge($itemsinlist, explode("\n", $contents));
+    return $itmesinlist;
 }
 // save file function 
 
